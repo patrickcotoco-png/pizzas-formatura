@@ -275,7 +275,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-6 px-5 pb-32 lg:grid-cols-[1fr_360px]">
+      <section className="mx-auto grid max-w-6xl gap-6 px-5 pb-12 lg:grid-cols-[1fr_360px]">
         <div className="space-y-8">
           {categories.map((category) => (
             <div key={category}>
@@ -298,7 +298,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <aside className="fixed inset-x-0 bottom-0 z-20 border-t border-white/10 bg-coal/95 p-4 backdrop-blur lg:sticky lg:inset-x-auto lg:top-6 lg:h-fit lg:rounded-lg lg:border lg:p-5">
+        <aside className="border-t border-white/10 bg-coal/95 p-4 backdrop-blur lg:sticky lg:top-6 lg:h-fit lg:rounded-lg lg:border lg:p-5">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-2 text-xl font-black text-white"><ShoppingBag size={22} /> Carrinho</h2>
             <span className="text-sm text-cream/65">{totalPizzas} pizzas</span>

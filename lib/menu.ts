@@ -16,6 +16,17 @@ export const PICKUP_TIMES_BY_ROUND = {
   Saída: ["17:30", "17:45", "18:00", "18:15", "18:30", "18:45"]
 } as const;
 
+export const BEVERAGE_NAMES = [
+  "Coca-Cola lata",
+  "Coca-Cola Zero lata",
+  "Pepsi lata",
+  "Guaraná Antarctica lata",
+  "Fanta lata",
+  "Coca-Cola 2L",
+  "Coca-Cola Zero 2L",
+  "Guaraná Antarctica 2L"
+];
+
 export const MENU: Product[] = [
   {
     id: "11111111-1111-4111-8111-111111111111",
@@ -98,20 +109,74 @@ export const MENU: Product[] = [
     active: true
   },
   {
-    id: "99999999-9999-4999-8999-999999999999",
-    name: "Refrigerante lata",
+    id: "d1111111-1111-4111-8111-111111111111",
+    name: "Coca-Cola lata",
     category: "bebida",
     price: 6,
-    description: "Bebida gelada em lata.",
+    description: "Coca-Cola gelada em lata.",
     pizza_count: 0,
     active: true
   },
   {
-    id: "aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa",
-    name: "Refrigerante 2L",
+    id: "d2222222-2222-4222-8222-222222222222",
+    name: "Coca-Cola Zero lata",
+    category: "bebida",
+    price: 6,
+    description: "Coca-Cola Zero gelada em lata.",
+    pizza_count: 0,
+    active: true
+  },
+  {
+    id: "d3333333-3333-4333-8333-333333333333",
+    name: "Pepsi lata",
+    category: "bebida",
+    price: 6,
+    description: "Pepsi gelada em lata.",
+    pizza_count: 0,
+    active: true
+  },
+  {
+    id: "d4444444-4444-4444-8444-444444444444",
+    name: "Guaraná Antarctica lata",
+    category: "bebida",
+    price: 6,
+    description: "Guaraná Antarctica gelado em lata.",
+    pizza_count: 0,
+    active: true
+  },
+  {
+    id: "d5555555-5555-4555-8555-555555555555",
+    name: "Fanta lata",
+    category: "bebida",
+    price: 6,
+    description: "Fanta gelada em lata.",
+    pizza_count: 0,
+    active: true
+  },
+  {
+    id: "d6666666-6666-4666-8666-666666666666",
+    name: "Coca-Cola 2L",
     category: "bebida",
     price: 15,
-    description: "Refrigerante 2 litros para compartilhar.",
+    description: "Coca-Cola 2 litros para compartilhar.",
+    pizza_count: 0,
+    active: true
+  },
+  {
+    id: "d7777777-7777-4777-8777-777777777777",
+    name: "Coca-Cola Zero 2L",
+    category: "bebida",
+    price: 15,
+    description: "Coca-Cola Zero 2 litros para compartilhar.",
+    pizza_count: 0,
+    active: true
+  },
+  {
+    id: "d8888888-8888-4888-8888-888888888888",
+    name: "Guaraná Antarctica 2L",
+    category: "bebida",
+    price: 15,
+    description: "Guaraná Antarctica 2 litros para compartilhar.",
     pizza_count: 0,
     active: true
   },

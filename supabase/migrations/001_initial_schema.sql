@@ -49,8 +49,14 @@ insert into products (id, name, category, price, description, pizza_count, activ
 ('66666666-6666-4666-8666-666666666666', 'Vegetariana da Casa', 'salgada', 40.00, 'Massa artesanal de longa fermentação natural, molho de tomate, muçarela, tomate cereja, brócolis, milho, azeitona, orégano e fio de azeite.', 1, true),
 ('77777777-7777-4777-8777-777777777777', 'Brigadeiro artesanal', 'doce', 35.00, 'Massa artesanal de longa fermentação natural com brigadeiro artesanal da casa e raspas de chocolate.', 1, true),
 ('88888888-8888-4888-8888-888888888888', 'Doce de leite com banana e canela', 'doce', 35.00, 'Massa artesanal de longa fermentação natural, doce de leite cremoso, banana e toque de canela.', 1, true),
-('99999999-9999-4999-8999-999999999999', 'Refrigerante lata', 'bebida', 6.00, 'Bebida gelada em lata.', 0, true),
-('aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa', 'Refrigerante 2L', 'bebida', 15.00, 'Refrigerante 2 litros para compartilhar.', 0, true),
+('d1111111-1111-4111-8111-111111111111', 'Coca-Cola lata', 'bebida', 6.00, 'Coca-Cola gelada em lata.', 0, true),
+('d2222222-2222-4222-8222-222222222222', 'Coca-Cola Zero lata', 'bebida', 6.00, 'Coca-Cola Zero gelada em lata.', 0, true),
+('d3333333-3333-4333-8333-333333333333', 'Pepsi lata', 'bebida', 6.00, 'Pepsi gelada em lata.', 0, true),
+('d4444444-4444-4444-8444-444444444444', 'Guaraná Antarctica lata', 'bebida', 6.00, 'Guaraná Antarctica gelado em lata.', 0, true),
+('d5555555-5555-4555-8555-555555555555', 'Fanta lata', 'bebida', 6.00, 'Fanta gelada em lata.', 0, true),
+('d6666666-6666-4666-8666-666666666666', 'Coca-Cola 2L', 'bebida', 15.00, 'Coca-Cola 2 litros para compartilhar.', 0, true),
+('d7777777-7777-4777-8777-777777777777', 'Coca-Cola Zero 2L', 'bebida', 15.00, 'Coca-Cola Zero 2 litros para compartilhar.', 0, true),
+('d8888888-8888-4888-8888-888888888888', 'Guaraná Antarctica 2L', 'bebida', 15.00, 'Guaraná Antarctica 2 litros para compartilhar.', 0, true),
 ('bbbbbbbb-bbbb-4bbb-8bbb-bbbbbbbbbbbb', 'Combo Família', 'combo', 109.90, 'Inclui 3 pizzas salgadas. O cliente deve escolher 3 sabores salgados.', 3, true),
 ('cccccccc-cccc-4ccc-8ccc-cccccccccccc', 'Combo Família Doce', 'combo', 139.90, 'Inclui 3 pizzas salgadas + 1 pizza doce. O cliente deve escolher 3 sabores salgados e 1 sabor doce.', 4, true)
 on conflict (id) do update set

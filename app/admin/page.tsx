@@ -2,13 +2,11 @@
 
 import { Download, FileSpreadsheet, FileText, RefreshCw, Search, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
-import { money } from "@/lib/menu";
+import { BEVERAGE_NAMES, money } from "@/lib/menu";
 import { Order, TimeSlot } from "@/lib/types";
 
 const paymentStatuses = ["pendente", "pago", "confirmado"];
 const orderStatuses = ["recebido", "em preparo", "pronto", "entregue", "cancelado"];
-
-type SummaryRow = [string, number, number];
 
 export default function AdminPage() {
   const [password, setPassword] = useState("");
@@ -110,6 +108,7 @@ export default function AdminPage() {
     const paidOrders = activeOrders.filter((order) => order.payment_status === "pago" || order.payment_status === "confirmado");
     const pendingOrders = activeOrders.filter((order) => order.payment_status === "pendente");
     const productSummary = new Map<string, { quantity: number; revenue: number }>();
+    const beverageTotals = new Map<string, number>(BEVERAGE_NAMES.map((name) => [name, 0]));
     const byDay = new Map<string, number>();
     const byRound = new Map<string, number>();
     const byTime = new Map<string, number>();
@@ -130,6 +129,9 @@ export default function AdminPage() {
           choices.forEach((choice) => addToSummary(productSummary, choice, item.quantity, revenuePerPizza * item.quantity));
         } else {
           addToSummary(productSummary, item.product.name, item.quantity, itemRevenue);
+          if (item.product.category === "bebida" && beverageTotals.has(item.product.name)) {
+            beverageTotals.set(item.product.name, (beverageTotals.get(item.product.name) ?? 0) + item.quantity);
+          }
         }
       });
     });
@@ -158,28 +160,7 @@ export default function AdminPage() {
       generalSummary: [
         ["Total de pedidos", sourceOrders.length],
         ["Total de pizzas vendidas", activeOrders.reduce((sum, order) => sum + order.total_pizzas, 0)],
-        [
-          "Total de refrigerantes lata",
-          activeOrders.reduce(
-            (sum, order) =>
-              sum +
-              order.items
-                .filter((item) => item.product.name === "Refrigerante lata")
-                .reduce((itemSum, item) => itemSum + item.quantity, 0),
-            0
-          )
-        ],
-        [
-          "Total de refrigerantes 2L",
-          activeOrders.reduce(
-            (sum, order) =>
-              sum +
-              order.items
-                .filter((item) => item.product.name === "Refrigerante 2L")
-                .reduce((itemSum, item) => itemSum + item.quantity, 0),
-            0
-          )
-        ],
+        ...BEVERAGE_NAMES.map((name) => [`Total de ${name}`, beverageTotals.get(name) ?? 0]),
         ["Faturamento total", activeOrders.reduce((sum, order) => sum + Number(order.total_amount), 0)],
         ["Total pago", paidOrders.reduce((sum, order) => sum + Number(order.total_amount), 0)],
         ["Total pendente", pendingOrders.reduce((sum, order) => sum + Number(order.total_amount), 0)],
@@ -193,10 +174,7 @@ export default function AdminPage() {
         [""],
         ["Quantidade por horário"],
         ...Array.from(byTime.entries()).map(([label, value]) => [label, value])
-      ],
-      summaryRows: Array.from(productSummary.entries()).map(
-        ([name, values]) => [name, values.quantity, Number(values.revenue.toFixed(2))] as SummaryRow
-      )
+      ]
     };
   }
 
