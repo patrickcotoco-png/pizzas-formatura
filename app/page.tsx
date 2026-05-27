@@ -203,10 +203,10 @@ export default function HomePage() {
               <Flame size={16} /> Forno a lenha • Produção limitada
             </div>
             <h1 className="text-4xl font-black leading-tight text-white sm:text-6xl">
-              Pizzas artesanais de formatura
+              Pizzas artesanais para formatura da M4
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-cream/80">
-              Massa de longa fermentação natural, retirada com horário marcado e arrecadação para a formatura.
+              Massa de longa fermentação natural, retirada com horário marcado e arrecadação para a formatura da M4.
             </p>
             <div className="mt-6 flex flex-col gap-3 text-sm text-cream/85 sm:flex-row">
               <span className="flex items-center gap-2"><CalendarDays size={18} /> 16/05 e 17/05</span>

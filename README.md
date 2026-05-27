@@ -1,4 +1,4 @@
-# Pré-venda de Pizzas Artesanais de Formatura
+# Pré-venda de Pizzas Artesanais para Formatura da M4
 
 Lojinha/cardápio online mobile-first para pré-venda de pizzas artesanais no forno a lenha, com carrinho, combos, controle de vagas por horário, Pix e painel admin simples.
 
