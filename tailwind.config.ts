@@ -5,15 +5,15 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ember: "#e85d04",
-        flame: "#d62828",
-        gold: "#f5b942",
-        wood: "#5a2e17",
-        coal: "#160f0b",
-        cream: "#fff3df"
+        ember: "#F28C00",
+        flame: "#0057A8",
+        gold: "#F6B800",
+        wood: "#0B2F66",
+        coal: "#020B1F",
+        cream: "#E5E7EB"
       },
       boxShadow: {
-        glow: "0 0 40px rgba(232, 93, 4, 0.24)"
+        glow: "0 0 40px rgba(246, 184, 0, 0.18)"
       }
     }
   },

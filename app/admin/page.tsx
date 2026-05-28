@@ -238,20 +238,20 @@ export default function AdminPage() {
 
   return (
     <main className="mx-auto min-h-screen max-w-7xl px-5 py-8">
-      <header className="flex flex-col gap-4 border-b border-white/10 pb-6 lg:flex-row lg:items-end lg:justify-between">
+      <header className="flex flex-col gap-4 border-b border-gold/20 pb-6 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="flex items-center gap-2 text-sm uppercase tracking-[0.2em] text-gold"><ShieldCheck size={16} /> Painel admin</p>
           <h1 className="mt-2 text-3xl font-black text-white">Pedidos da pré-venda</h1>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
-          <input className="rounded-md border border-white/10 bg-black/35 px-4 py-3" type="password" placeholder="Senha admin" value={password} onChange={(event) => setPassword(event.target.value)} />
+          <input className="rounded-md border border-gold/20 bg-coal/55 px-4 py-3" type="password" placeholder="Senha admin" value={password} onChange={(event) => setPassword(event.target.value)} />
           <button className="flex items-center justify-center gap-2 rounded-md bg-gold px-4 py-3 font-bold text-coal" onClick={loadPanel}>
             <RefreshCw size={18} /> Carregar
           </button>
         </div>
       </header>
 
-      {error && <p className="mt-4 rounded-md bg-flame/20 px-4 py-3 text-gold">{error}</p>}
+      {error && <p className="mt-4 rounded-md border border-gold/30 bg-coal/65 px-4 py-3 text-gold">{error}</p>}
 
       <section className="mt-6 grid gap-3 sm:grid-cols-3">
         <Metric label="Total vendido" value={money(summary.totalSold)} />
@@ -263,7 +263,7 @@ export default function AdminPage() {
         <Panel title="Pizzas por sabor" rows={summary.flavors} />
         <Panel title="Bebidas" rows={summary.drinks} />
         <Panel title="Total por rodada" rows={summary.rounds} />
-        <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+        <div className="rounded-lg border border-gold/20 bg-wood/30 p-4">
           <h2 className="mb-3 font-black text-white">Vagas por horário</h2>
           <div className="space-y-2 text-sm">
             {slots.map((slot) => (
@@ -276,7 +276,7 @@ export default function AdminPage() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-lg border border-white/10 bg-black/25 p-4">
+      <section className="mt-6 rounded-lg border border-gold/20 bg-wood/30 p-4">
         <div className="mb-4 flex items-center gap-2 text-white">
           <Search size={18} />
           <h2 className="font-black">Filtros</h2>
@@ -285,7 +285,7 @@ export default function AdminPage() {
           {Object.keys(filters).map((key) => (
             <select
               key={key}
-              className="rounded-md border border-white/10 bg-black/40 px-3 py-3"
+              className="rounded-md border border-gold/20 bg-coal/55 px-3 py-3"
               value={filters[key as keyof typeof filters]}
               onChange={(event) => setFilters((current) => ({ ...current, [key]: event.target.value }))}
             >
@@ -297,10 +297,10 @@ export default function AdminPage() {
           ))}
         </div>
         <div className="mt-4 flex flex-col gap-2 sm:flex-row">
-          <button className="flex items-center justify-center gap-2 rounded-md bg-ember px-4 py-3 font-bold text-white" onClick={exportExcel}>
+          <button className="flex items-center justify-center gap-2 rounded-md bg-gold px-4 py-3 font-bold text-coal" onClick={exportExcel}>
             <FileSpreadsheet size={18} /> Exportar Excel
           </button>
-          <button className="flex items-center justify-center gap-2 rounded-md border border-white/15 px-4 py-3 font-bold text-white" onClick={exportCsv}>
+          <button className="flex items-center justify-center gap-2 rounded-md border border-gold/30 bg-wood/40 px-4 py-3 font-bold text-white" onClick={exportCsv}>
             <FileText size={18} /> Exportar CSV
           </button>
           <span className="flex items-center gap-2 text-sm text-cream/60">
@@ -311,12 +311,12 @@ export default function AdminPage() {
 
       <section className="mt-6 space-y-4">
         {filteredOrders.map((order) => (
-          <article key={order.id} className="rounded-lg border border-white/10 bg-black/30 p-4">
+          <article key={order.id} className="rounded-lg border border-gold/20 bg-wood/30 p-4">
             <div className="grid gap-4 lg:grid-cols-[1fr_260px]">
               <div>
                 <div className="flex flex-wrap items-center gap-3">
                   <h3 className="text-xl font-black text-white">{order.order_number}</h3>
-                  <span className="rounded bg-white/10 px-2 py-1 text-sm">{order.event_date} • {order.round} • {order.pickup_time}</span>
+                  <span className="rounded border border-gold/20 bg-coal/55 px-2 py-1 text-sm">{order.event_date} • {order.round} • {order.pickup_time}</span>
                 </div>
                 <p className="mt-2 text-cream/80">{order.customer_name} • WhatsApp: {order.whatsapp}</p>
                 <div className="mt-3 space-y-2 text-sm text-cream/75">
@@ -336,10 +336,10 @@ export default function AdminPage() {
                   <Metric label="Pizzas" value={String(order.total_pizzas)} compact />
                   <Metric label="Total" value={money(Number(order.total_amount))} compact />
                 </div>
-                <select className="w-full rounded-md border border-white/10 bg-black/40 px-3 py-3" value={order.payment_status} onChange={(event) => updateOrder(order, { payment_status: event.target.value as Order["payment_status"] })}>
+                <select className="w-full rounded-md border border-gold/20 bg-coal/55 px-3 py-3" value={order.payment_status} onChange={(event) => updateOrder(order, { payment_status: event.target.value as Order["payment_status"] })}>
                   {paymentStatuses.map((status) => <option key={status}>{status}</option>)}
                 </select>
-                <select className="w-full rounded-md border border-white/10 bg-black/40 px-3 py-3" value={order.order_status} onChange={(event) => updateOrder(order, { order_status: event.target.value as Order["order_status"] })}>
+                <select className="w-full rounded-md border border-gold/20 bg-coal/55 px-3 py-3" value={order.order_status} onChange={(event) => updateOrder(order, { order_status: event.target.value as Order["order_status"] })}>
                   {orderStatuses.map((status) => <option key={status}>{status}</option>)}
                 </select>
               </div>
@@ -353,7 +353,7 @@ export default function AdminPage() {
 
 function Metric({ label, value, compact = false }: { label: string; value: string; compact?: boolean }) {
   return (
-    <div className={`rounded-lg border border-white/10 bg-black/30 ${compact ? "p-3" : "p-4"}`}>
+    <div className={`rounded-lg border border-gold/20 bg-wood/30 ${compact ? "p-3" : "p-4"}`}>
       <p className="text-xs uppercase tracking-[0.16em] text-cream/55">{label}</p>
       <p className="mt-1 text-xl font-black text-gold">{value}</p>
     </div>
@@ -362,7 +362,7 @@ function Metric({ label, value, compact = false }: { label: string; value: strin
 
 function Panel({ title, rows }: { title: string; rows: [string, number][] }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-black/25 p-4">
+    <div className="rounded-lg border border-gold/20 bg-wood/30 p-4">
       <h2 className="mb-3 font-black text-white">{title}</h2>
       <div className="space-y-2 text-sm">
         {rows.length === 0 && <p className="text-cream/55">Sem dados.</p>}
