@@ -14,7 +14,7 @@ export default function HomePage() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [customerName, setCustomerName] = useState("");
   const [whatsapp, setWhatsapp] = useState("");
-  const [eventDate, setEventDate] = useState("16/05");
+  const [eventDate, setEventDate] = useState("13/06");
   const [round, setRound] = useState("Almoço");
   const [pickupTime, setPickupTime] = useState("");
   const [notes, setNotes] = useState("");
@@ -209,7 +209,7 @@ export default function HomePage() {
               Massa de longa fermentação natural, retirada com horário marcado e arrecadação para a formatura da M4.
             </p>
             <div className="mt-6 flex flex-col gap-3 text-sm text-cream/85 sm:flex-row">
-              <span className="flex items-center gap-2"><CalendarDays size={18} /> 16/05 e 17/05</span>
+              <span className="flex items-center gap-2"><CalendarDays size={18} /> 13/06 e 14/06</span>
               <span className="flex items-center gap-2"><MapPin size={18} /> R. Via Veneto, 2340</span>
             </div>
           </div>

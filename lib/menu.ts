@@ -2,13 +2,13 @@ import { Product } from "@/lib/types";
 
 export const PIX_KEY = "ab760ff6-b3e3-4de4-b86c-4ae181df237f";
 
-export const EVENT_DATES = ["16/05", "17/05"];
+export const EVENT_DATES = ["13/06", "14/06"];
 
 export const ROUNDS = [
-  { day: "16/05", label: "Almoço", range: "12:00 às 13:30" },
-  { day: "16/05", label: "Saída", range: "17:30 às 19:00" },
-  { day: "17/05", label: "Almoço", range: "12:00 às 13:30" },
-  { day: "17/05", label: "Saída", range: "17:30 às 19:00" }
+  { day: "13/06", label: "Almoço", range: "12:00 às 13:30" },
+  { day: "13/06", label: "Saída", range: "17:30 às 19:00" },
+  { day: "14/06", label: "Almoço", range: "12:00 às 13:30" },
+  { day: "14/06", label: "Saída", range: "17:30 às 19:00" }
 ];
 
 export const PICKUP_TIMES_BY_ROUND = {

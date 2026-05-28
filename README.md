@@ -59,7 +59,7 @@ O SQL cria:
 - `time_slots`
 - `orders`
 - seed do cardápio
-- seed dos horários de 16/05 e 17/05
+- seed dos horários de 13/06 e 14/06
 - função `create_order_safely`
 
 ## Controle de vagas
