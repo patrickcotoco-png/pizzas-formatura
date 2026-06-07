@@ -65,33 +65,37 @@ export async function PATCH(request: Request) {
           pickupTime: currentOrder.pickup_time,
           error: slotError?.message
         });
-        throw new Error("Horário do pedido não encontrado. Não foi possível ajustar as vagas.");
+        if (shouldReactivate) {
+          throw new Error("Horário do pedido não encontrado. Não foi possível reativar o pedido.");
+        }
       }
 
-      const totalPizzas = Number(currentOrder.total_pizzas);
-      const nextCurrentPizzas = shouldCancel
-        ? Math.max(0, Number(slot.current_pizzas) - totalPizzas)
-        : Number(slot.current_pizzas) + totalPizzas;
+      if (slot) {
+        const totalPizzas = Number(currentOrder.total_pizzas);
+        const nextCurrentPizzas = shouldCancel
+          ? Math.max(0, Number(slot.current_pizzas) - totalPizzas)
+          : Number(slot.current_pizzas) + totalPizzas;
 
-      if (shouldReactivate && nextCurrentPizzas > Number(slot.max_pizzas)) {
-        console.warn("[Admin] Reativação bloqueada por falta de vagas.", {
-          order: currentOrder.order_number,
-          totalPizzas,
-          currentPizzas: slot.current_pizzas,
-          maxPizzas: slot.max_pizzas
-        });
-        throw new Error("Não há vagas suficientes neste horário para reativar o pedido.");
-      }
+        if (shouldReactivate && nextCurrentPizzas > Number(slot.max_pizzas)) {
+          console.warn("[Admin] Reativação bloqueada por falta de vagas.", {
+            order: currentOrder.order_number,
+            totalPizzas,
+            currentPizzas: slot.current_pizzas,
+            maxPizzas: slot.max_pizzas
+          });
+          throw new Error("Não há vagas suficientes neste horário para reativar o pedido.");
+        }
 
-      slotRollback = { id: slot.id, current_pizzas: Number(slot.current_pizzas) };
-      const { error: slotUpdateError } = await supabase
-        .from("time_slots")
-        .update({ current_pizzas: nextCurrentPizzas })
-        .eq("id", slot.id);
+        slotRollback = { id: slot.id, current_pizzas: Number(slot.current_pizzas) };
+        const { error: slotUpdateError } = await supabase
+          .from("time_slots")
+          .update({ current_pizzas: nextCurrentPizzas })
+          .eq("id", slot.id);
 
-      if (slotUpdateError) {
-        console.warn("[Admin] Falha ao atualizar vagas do horário.", slotUpdateError.message);
-        throw new Error("Não foi possível atualizar as vagas do horário.");
+        if (slotUpdateError) {
+          console.warn("[Admin] Falha ao atualizar vagas do horário.", slotUpdateError.message);
+          throw new Error("Não foi possível atualizar as vagas do horário.");
+        }
       }
     }
 
