@@ -200,14 +200,20 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-coal/70 px-3 py-2 text-sm text-gold">
-              <Flame size={16} /> Forno a lenha • Produção limitada
+              <Flame size={16} /> Individuais 25 cm • Forno a lenha
             </div>
             <h1 className="text-4xl font-black leading-tight text-white sm:text-6xl">
               Pizzas artesanais para formatura da <span className="text-gold">M4</span>
             </h1>
             <p className="mt-4 max-w-2xl text-lg text-cream/80">
-              Massa de longa fermentação natural, retirada com horário marcado e arrecadação para a formatura da M4.
+              Pizzas individuais de 25 cm, montadas e assadas no forno a lenha, com massa artesanal de longa fermentação natural.
             </p>
+            <div className="mt-5 flex flex-wrap gap-2 text-sm font-bold text-gold">
+              <span className="rounded-full border border-gold/30 bg-coal/55 px-3 py-2">25 cm</span>
+              <span className="rounded-full border border-gold/30 bg-coal/55 px-3 py-2">Assada no forno a lenha</span>
+              <span className="rounded-full border border-gold/30 bg-coal/55 px-3 py-2">Massa de longa fermentação</span>
+              <span className="rounded-full border border-gold/30 bg-coal/55 px-3 py-2">Pré-venda com horário marcado</span>
+            </div>
             <div className="mt-6 flex flex-col gap-3 text-sm text-cream/85 sm:flex-row">
               <span className="flex items-center gap-2"><CalendarDays size={18} /> 13/06 e 14/06</span>
               <span className="flex items-center gap-2"><MapPin size={18} /> R. Via Veneto, 2340</span>
