@@ -174,13 +174,16 @@ export default function HomePage() {
           <h1 className="mt-2 text-3xl font-black text-white">{success.order_number}</h1>
           <p className="mt-4 text-lg text-cream/85">Total: {money(success.total_amount)}</p>
           <div className="mt-6 rounded-lg border border-gold/25 bg-coal/60 p-4">
-            <p className="text-sm text-cream/70">Chave Pix</p>
+            <p className="text-sm text-cream/70">Chave Pix aleatória</p>
             <p className="mt-1 break-all font-semibold text-gold">{PIX_KEY}</p>
+            <p className="mt-2 text-sm text-cream/70">
+              No app do banco, escolha Pix por chave aleatória. Não use o campo Pix Copia e Cola.
+            </p>
             <button
               className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-gold px-4 py-3 font-bold text-coal"
               onClick={() => navigator.clipboard.writeText(PIX_KEY)}
             >
-              <Clipboard size={18} /> Copiar Pix
+              <Clipboard size={18} /> Copiar chave Pix
             </button>
           </div>
           <p className="mt-5 text-cream/80">
