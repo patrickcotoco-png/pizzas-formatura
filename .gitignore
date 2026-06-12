@@ -7,3 +7,5 @@ out
 *.tsbuildinfo
 dev-server*.log
 screenshot-*.png
+
+.vercel
