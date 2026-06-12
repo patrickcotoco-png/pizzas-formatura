@@ -38,11 +38,19 @@ export default function HomePage() {
   const roundTotal = selectedSlots.reduce((sum, slot) => sum + slot.current_pizzas, 0);
   const roundSoldOut = roundTotal >= 30;
   const totalPizzas = cart.reduce((sum, item) => sum + item.product.pizza_count * item.quantity, 0);
+  const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
+  const canChooseProducts = customerName.trim().length >= 3 && whatsapp.replace(/\D/g, "").length >= 10 && Boolean(eventDate && round && pickupTime);
 
   const availableRounds = ROUNDS.filter((item) => item.day === eventDate);
 
   function addProduct(product: Product) {
+    if (!canChooseProducts) {
+      setError("Preencha nome, WhatsApp, dia, rodada e horário antes de adicionar itens.");
+      document.getElementById("customer-data")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
     setCart((current) => {
       const found = current.find((item) => item.product.id === product.id && product.category !== "combo");
       if (found) {
@@ -81,6 +89,10 @@ export default function HomePage() {
         return { ...item, [type]: choices };
       })
     );
+  }
+
+  function scrollToCart() {
+    document.getElementById("cart")?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   async function finishOrder() {
@@ -222,7 +234,7 @@ export default function HomePage() {
               <span className="flex items-center gap-2"><MapPin size={18} /> R. Via Veneto, 2340</span>
             </div>
           </div>
-          <div className="wood-panel rounded-lg border border-gold/25 p-5 shadow-glow">
+          <div id="customer-data" className="wood-panel scroll-mt-4 rounded-lg border border-gold/25 p-5 shadow-glow">
             <div className="flex gap-3 rounded-md border border-gold/40 bg-coal/55 p-3 text-sm text-cream">
               <AlertTriangle className="mt-0.5 shrink-0 text-gold" size={18} />
               Produção limitada por horário. Escolha seu horário com antecedência.
@@ -284,8 +296,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto grid max-w-6xl gap-6 px-5 pb-12 lg:grid-cols-[1fr_360px]">
+      <section className="mx-auto grid max-w-6xl gap-6 px-5 pb-28 lg:grid-cols-[1fr_360px] lg:pb-12">
         <div className="space-y-8">
+          {!canChooseProducts && (
+            <div className="rounded-lg border border-gold/35 bg-coal/70 p-4 text-sm text-cream">
+              <strong className="block text-gold">Antes de escolher as pizzas</strong>
+              Preencha nome, WhatsApp, dia, rodada e horário de retirada no início da página. Depois disso os botões de adicionar serão liberados.
+            </div>
+          )}
           {categories.map((category) => (
             <div key={category}>
               <h2 className="mb-3 text-2xl font-black capitalize text-white">{category === "combo" ? "Combos" : category}</h2>
@@ -297,8 +315,12 @@ export default function HomePage() {
                       <span className="shrink-0 font-black text-gold">{money(product.price)}</span>
                     </div>
                     <p className="mt-2 text-sm leading-relaxed text-cream/70">{product.description}</p>
-                    <button className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-gold px-4 py-3 font-bold text-coal" onClick={() => addProduct(product)}>
-                      <Plus size={18} /> Adicionar
+                    <button
+                      disabled={!canChooseProducts}
+                      className="mt-4 flex w-full items-center justify-center gap-2 rounded-md bg-gold px-4 py-3 font-bold text-coal disabled:cursor-not-allowed disabled:opacity-45"
+                      onClick={() => addProduct(product)}
+                    >
+                      <Plus size={18} /> {canChooseProducts ? "Adicionar" : "Preencha os dados primeiro"}
                     </button>
                   </article>
                 ))}
@@ -307,7 +329,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <aside className="border-t border-gold/25 bg-coal/95 p-4 backdrop-blur lg:sticky lg:top-6 lg:h-fit lg:rounded-lg lg:border lg:p-5">
+        <aside id="cart" className="scroll-mt-4 border-t border-gold/25 bg-coal/95 p-4 backdrop-blur lg:sticky lg:top-6 lg:h-fit lg:rounded-lg lg:border lg:p-5">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-2 text-xl font-black text-white"><ShoppingBag size={22} /> Carrinho</h2>
             <span className="text-sm text-cream/65">{totalPizzas} pizzas</span>
@@ -354,6 +376,18 @@ export default function HomePage() {
           </div>
         </aside>
       </section>
+      {cart.length > 0 && (
+        <button
+          className="fixed bottom-4 right-4 z-50 flex items-center gap-2 rounded-full border border-gold/40 bg-gold px-4 py-3 font-black text-coal shadow-glow lg:hidden"
+          onClick={scrollToCart}
+        >
+          <ShoppingBag size={20} />
+          Ver carrinho
+          <span className="rounded-full bg-coal px-2 py-0.5 text-xs text-gold">
+            {totalPizzas > 0 ? `${totalPizzas} pizza${totalPizzas === 1 ? "" : "s"}` : `${totalCartItems} item${totalCartItems === 1 ? "" : "s"}`}
+          </span>
+        </button>
+      )}
     </main>
   );
 }

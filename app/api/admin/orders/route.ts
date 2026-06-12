@@ -34,6 +34,42 @@ export async function PATCH(request: Request) {
   try {
     const body = await request.json();
     const supabase = getSupabase();
+
+    if (body.type === "slot") {
+      const nextMaxPizzas = Number(body.max_pizzas);
+      if (!body.id || !Number.isInteger(nextMaxPizzas) || nextMaxPizzas < 0) {
+        throw new Error("Limite de horário inválido.");
+      }
+
+      const { data: slot, error: slotReadError } = await supabase
+        .from("time_slots")
+        .select("*")
+        .eq("id", body.id)
+        .single();
+
+      if (slotReadError || !slot) throw new Error("Horário não encontrado.");
+      if (nextMaxPizzas < Number(slot.current_pizzas)) {
+        throw new Error("O limite não pode ser menor que a quantidade de pizzas já vendida neste horário.");
+      }
+
+      const { error: slotUpdateError } = await supabase
+        .from("time_slots")
+        .update({ max_pizzas: nextMaxPizzas })
+        .eq("id", body.id);
+
+      if (slotUpdateError) throw new Error("Não foi possível atualizar o limite do horário.");
+
+      const { data: slots, error: slotsError } = await supabase
+        .from("time_slots")
+        .select("*")
+        .order("event_date")
+        .order("pickup_time");
+
+      if (slotsError) throw slotsError;
+
+      return NextResponse.json({ slots: slots ?? [] });
+    }
+
     const { data: currentOrder, error: orderReadError } = await supabase
       .from("orders")
       .select("*")

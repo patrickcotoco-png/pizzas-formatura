@@ -1,6 +1,6 @@
 "use client";
 
-import { Download, FileSpreadsheet, FileText, RefreshCw, Search, ShieldCheck } from "lucide-react";
+import { Download, FileSpreadsheet, FileText, Minus, Plus, RefreshCw, Search, ShieldCheck } from "lucide-react";
 import { useMemo, useState } from "react";
 import { BEVERAGE_NAMES, money } from "@/lib/menu";
 import { Order, TimeSlot } from "@/lib/types";
@@ -45,6 +45,27 @@ export default function AdminPage() {
       return;
     }
     setOrders((current) => current.map((item) => (item.id === order.id ? data.order : item)));
+    setSlots(data.slots ?? slots);
+  }
+
+  async function updateSlotLimit(slot: TimeSlot, delta: number) {
+    setError("");
+    const nextMaxPizzas = slot.max_pizzas + delta;
+    if (nextMaxPizzas < slot.current_pizzas) {
+      setError("O limite não pode ficar menor que a quantidade já vendida neste horário.");
+      return;
+    }
+
+    const response = await fetch("/api/admin/orders", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json", "x-admin-password": password },
+      body: JSON.stringify({ type: "slot", id: slot.id, max_pizzas: nextMaxPizzas })
+    });
+    const data = await response.json();
+    if (!response.ok) {
+      setError(data.message ?? "Erro ao atualizar limite do horário.");
+      return;
+    }
     setSlots(data.slots ?? slots);
   }
 
@@ -267,9 +288,31 @@ export default function AdminPage() {
           <h2 className="mb-3 font-black text-white">Vagas por horário</h2>
           <div className="space-y-2 text-sm">
             {slots.map((slot) => (
-              <div key={slot.id} className="flex justify-between gap-3">
-                <span>{slot.event_date} • {slot.round} • {slot.pickup_time}</span>
-                <strong className="text-gold">{slot.max_pizzas - slot.current_pizzas}</strong>
+              <div key={slot.id} className="rounded-md border border-gold/15 bg-coal/35 p-2">
+                <div className="flex justify-between gap-3">
+                  <span>{slot.event_date} • {slot.round} • {slot.pickup_time}</span>
+                  <strong className="text-gold">{slot.max_pizzas - slot.current_pizzas} vagas</strong>
+                </div>
+                <div className="mt-2 flex items-center justify-between gap-2 text-xs text-cream/70">
+                  <span>{slot.current_pizzas}/{slot.max_pizzas} pizzas</span>
+                  <div className="flex gap-2">
+                    <button
+                      className="rounded border border-gold/25 bg-coal/60 p-2 text-white disabled:cursor-not-allowed disabled:opacity-40"
+                      disabled={slot.max_pizzas <= slot.current_pizzas}
+                      onClick={() => updateSlotLimit(slot, -1)}
+                      title="Diminuir limite do horário"
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <button
+                      className="rounded bg-gold p-2 text-coal"
+                      onClick={() => updateSlotLimit(slot, 1)}
+                      title="Aumentar limite do horário"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
