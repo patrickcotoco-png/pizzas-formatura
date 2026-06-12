@@ -5,15 +5,15 @@ export const PIX_KEY = "ab760ff6-b3e3-4de4-b86c-4ae181df237f";
 export const EVENT_DATES = ["13/06", "14/06"];
 
 export const ROUNDS = [
-  { day: "13/06", label: "Almoço", range: "12:00 às 13:45" },
-  { day: "13/06", label: "Saída", range: "17:30 às 19:15" },
-  { day: "14/06", label: "Almoço", range: "12:00 às 13:45" },
-  { day: "14/06", label: "Saída", range: "17:30 às 19:15" }
+  { day: "13/06", label: "Almoço", range: "12:00 às 13:30" },
+  { day: "13/06", label: "Saída", range: "17:30 às 18:30" },
+  { day: "14/06", label: "Almoço", range: "12:00 às 13:30" },
+  { day: "14/06", label: "Saída", range: "17:30 às 18:30" }
 ];
 
 export const PICKUP_TIMES_BY_ROUND = {
-  Almoço: ["12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30"],
-  Saída: ["17:30", "17:45", "18:00", "18:15", "18:30", "18:45", "19:00"]
+  Almoço: ["12:00", "12:15", "12:30", "12:45", "13:00", "13:15"],
+  Saída: ["17:30", "17:45", "18:00", "18:15", "18:30"]
 } as const;
 
 export const BEVERAGE_NAMES = [
