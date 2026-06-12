@@ -36,7 +36,8 @@ export default function HomePage() {
   const selectedSlot = selectedSlots.find((slot) => slot.pickup_time === pickupTime);
   const pickupTimes = PICKUP_TIMES_BY_ROUND[round as keyof typeof PICKUP_TIMES_BY_ROUND] ?? [];
   const roundTotal = selectedSlots.reduce((sum, slot) => sum + slot.current_pizzas, 0);
-  const roundSoldOut = roundTotal >= 30;
+  const roundCapacity = selectedSlots.reduce((sum, slot) => sum + slot.max_pizzas, 0) || pickupTimes.length * 5;
+  const roundSoldOut = roundTotal >= roundCapacity;
   const totalPizzas = cart.reduce((sum, item) => sum + item.product.pizza_count * item.quantity, 0);
   const totalCartItems = cart.reduce((sum, item) => sum + item.quantity, 0);
   const totalAmount = cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0);

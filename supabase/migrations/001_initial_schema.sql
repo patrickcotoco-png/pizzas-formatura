@@ -74,24 +74,28 @@ insert into time_slots (event_date, round, pickup_time, max_pizzas, current_pizz
 ('13/06', 'Almoço', '12:45', 5, 0),
 ('13/06', 'Almoço', '13:00', 5, 0),
 ('13/06', 'Almoço', '13:15', 5, 0),
+('13/06', 'Almoço', '13:30', 5, 0),
 ('13/06', 'Saída', '17:30', 5, 0),
 ('13/06', 'Saída', '17:45', 5, 0),
 ('13/06', 'Saída', '18:00', 5, 0),
 ('13/06', 'Saída', '18:15', 5, 0),
 ('13/06', 'Saída', '18:30', 5, 0),
 ('13/06', 'Saída', '18:45', 5, 0),
+('13/06', 'Saída', '19:00', 5, 0),
 ('14/06', 'Almoço', '12:00', 5, 0),
 ('14/06', 'Almoço', '12:15', 5, 0),
 ('14/06', 'Almoço', '12:30', 5, 0),
 ('14/06', 'Almoço', '12:45', 5, 0),
 ('14/06', 'Almoço', '13:00', 5, 0),
 ('14/06', 'Almoço', '13:15', 5, 0),
+('14/06', 'Almoço', '13:30', 5, 0),
 ('14/06', 'Saída', '17:30', 5, 0),
 ('14/06', 'Saída', '17:45', 5, 0),
 ('14/06', 'Saída', '18:00', 5, 0),
 ('14/06', 'Saída', '18:15', 5, 0),
 ('14/06', 'Saída', '18:30', 5, 0),
-('14/06', 'Saída', '18:45', 5, 0)
+('14/06', 'Saída', '18:45', 5, 0),
+('14/06', 'Saída', '19:00', 5, 0)
 on conflict (event_date, round, pickup_time) do update set
   max_pizzas = excluded.max_pizzas,
   current_pizzas = excluded.current_pizzas;
@@ -147,7 +151,11 @@ begin
     raise exception 'Este horário acabou de esgotar. Escolha outro horário.';
   end if;
 
-  if v_round_total + p_total_pizzas > 30 then
+  if v_round_total + p_total_pizzas > (
+    select coalesce(sum(max_pizzas), 0)
+    from time_slots
+    where event_date = p_event_date and round = p_round
+  ) then
     raise exception 'Esta rodada acabou de esgotar. Escolha outra rodada.';
   end if;
 
